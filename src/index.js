@@ -3,6 +3,8 @@ import ApolloClient, { gql } from 'apollo-boost';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import env from './env';
+import UsersList from './components/usersList';
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 const client = new ApolloClient({
   uri: env.GRAPHQL_ENDPOINT,
@@ -39,7 +41,10 @@ const App = () => {
   return (
     <pre>
       <code>
-        {JSON.stringify(data, null, 2)}
+      {/* <Routes>
+        <Route path="/" render={(props) => props.allUsers ? <UsersList users={props.allUsers} /> : <p>No users were fetched</p>}/>
+      </Routes> */}
+        {data.allUsers.length ? <UsersList users={data.allUsers}/> : <p>No users were fetched</p>}
       </code>
     </pre>
   )
@@ -47,7 +52,9 @@ const App = () => {
 
 const Root = () => (
   <ApolloProvider client={client}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </ApolloProvider>
 );
 
