@@ -1,0 +1,37 @@
+@import '../global.scss';
+.usersList {
+  padding: 20px 50px;
+  font-family: $fontSecondary;
+  box-sizing: border-box;
+  color: $darkGray;
+
+  button {
+    height: 30px;
+    width: 80px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px $red;
+    background-color: white;
+    color: $red;
+
+    &:disabled {
+      border: solid 2px $lightGray;
+      color: $lightGray;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .heading {
+    border-bottom: solid 2px $lightGray;
+    font-size: 14px;
+    text-transform: uppercase;
+    h3:first-of-type {
+      padding-left: 50px;
+    }
+  }
+}

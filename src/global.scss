@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@800&family=Ubuntu&display=swap');
+
+$fontPrimary: 'Roboto', sans-serif;
+$fontSecondary: 'Open Sans', sans-serif;
+$lightGray: #e5e5e5;
+$midGray: #777777;
+$darkGray: #333333;
+$blue: #0070c9;
+$red: #ee0000;
+
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+}
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-family: $fontPrimary;
+    color: black;
+    border-bottom: solid 2px $lightGray;
+}

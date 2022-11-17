@@ -3,18 +3,19 @@ import ApolloClient, { gql } from 'apollo-boost';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import env from './env';
-import UsersList from './components/usersList';
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import UsersList from './views/usersList.js';
+import UserDetails from './views/userDetails.js';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const client = new ApolloClient({
   uri: env.GRAPHQL_ENDPOINT,
-  request: operation => {
+  request: (operation) => {
     operation.setContext({
       headers: {
         'x-api-key': env.GRAPHQL_API_KEY,
-      }
-    })
-  }
+      },
+    });
+  },
 });
 
 const ALL_USERS_QUERY = gql`
@@ -41,21 +42,21 @@ const App = () => {
   return (
     <pre>
       <code>
-      {/* <Routes>
-        <Route path="/" render={(props) => props.allUsers ? <UsersList users={props.allUsers} /> : <p>No users were fetched</p>}/>
-      </Routes> */}
-        {data.allUsers.length ? <UsersList users={data.allUsers}/> : <p>No users were fetched</p>}
+        <Routes>
+          <Route path="/" element={data.allUsers.length ? <UsersList users={data.allUsers} /> : <div>No Users Found</div>} />
+          <Route path="/user" element={<UserDetails />} />
+        </Routes>
       </code>
     </pre>
-  )
-}
+  );
+};
 
 const Root = () => (
-  <ApolloProvider client={client}>
-    <Router>
+  <Router>
+    <ApolloProvider client={client}>
       <App />
-    </Router>
-  </ApolloProvider>
+    </ApolloProvider>
+  </Router>
 );
 
 ReactDOM.render(<Root />, document.getElementById('root'));

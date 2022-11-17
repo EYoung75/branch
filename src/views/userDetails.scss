@@ -1,0 +1,40 @@
+@import '../global.scss';
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 0 50px;
+  padding-top: 10%;
+
+
+  button {
+    height: 30px;
+    width: 80px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $blue;
+    border: none;
+    color: white;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .details {
+    margin-top: 20px;
+
+    .column:first-of-type {
+        border-right: solid $lightGray 2px;
+        margin-right: 20px;
+
+        input {
+            width: 50%;
+            margin-top: 3px;
+        }
+    }
+  }
+}

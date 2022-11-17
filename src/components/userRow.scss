@@ -1,0 +1,32 @@
+@import '../global.scss';
+
+.userRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: solid 2px $lightGray;
+  padding: 15px 0;
+  transition: hover 0.3s;
+  font-size: 14px;
+  color: $darkGray;
+  text-decoration: none;
+
+  &:hover {
+    background-color: lighten($lightGray, 5%);
+    cursor: pointer;
+
+    span:first-of-type {
+      color: $blue;
+    }
+  }
+  input {
+    width: 50px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  span {
+    width: calc((100% - 20px) / 3);
+    text-align: left;
+  }
+}
