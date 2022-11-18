@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { rolesMap } from '../usersDef';
-import { useMutation, useQuery } from '@apollo/react-hooks';
-import { ALL_USERS, GET_USER, UPDATE_USER } from '../gql';
+import { useMutation } from '@apollo/react-hooks';
+import { ALL_USERS, UPDATE_USER } from '../gql';
 import './userDetails.scss';
 
 export default function UserDetails() {
