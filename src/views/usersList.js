@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
-import './usersList.scss';
 import UserRow from '../components/userRow.js';
+import { useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+import './usersList.scss';
 
 export default function UsersList(props) {
   const { users } = props;
+  // Local state for tracking all selected users
   const [selectedUsers, setSelectedUsers] = useState([]);
+
+  const DELETE_USERS = gql`
+    mutation DeleteUsers($emails: [ID]!) {
+      deleteUsers(emails: $emails)
+    }
+  `;
+
+  const [deleteUsers, { data, loading, error }] = useMutation(DELETE_USERS);
 
   // Accepts a user object as a parameter and if the user exists removes it from the selectedUsers array, otherwise appends the user to the array
   const handleUser = (user) => {
@@ -17,19 +28,29 @@ export default function UsersList(props) {
     } else {
       setSelectedUsers([...selectedUsers, user]);
     }
+  };
+
+  if (loading) {
+    return <p>Deleting Users...</p>;
   }
 
-  // Handles the mutation call for removing any selected users
-  const deleteUsers = () => {
-    if (!selectedUsers.length) return;
-    console.log('DELETING', selectedUsers);
-  };
+  if (error) {
+    return <p>Error: {JSON.stringify(error)}</p>;
+  }
 
   return (
     <div className="usersList">
+      {JSON.stringify(data)}
       <div className="title row">
         <h1>Users</h1>
-        <button disabled={!selectedUsers.length} onClick={() => deleteUsers()}>
+        <button
+          disabled={!selectedUsers.length}
+          onClick={() =>
+            deleteUsers({
+              variables: { emails: selectedUsers.map((user) => user.email)},
+            })
+          }
+        >
           Delete
         </button>
       </div>

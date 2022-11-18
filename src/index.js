@@ -1,11 +1,14 @@
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ApolloClient, { gql } from 'apollo-boost';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import env from './env';
 import UsersList from './views/usersList.js';
 import UserDetails from './views/userDetails.js';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useMutation } from '@apollo/react-hooks';
+import { ALL_USERS } from './queries';
+
 
 const client = new ApolloClient({
   uri: env.GRAPHQL_ENDPOINT,
@@ -18,35 +21,42 @@ const client = new ApolloClient({
   },
 });
 
-const ALL_USERS_QUERY = gql`
-  query {
-    allUsers {
-      email
-      name
-      role
-    }
+
+
+const RESET_USERS = gql`
+  mutation ResetUsers {
+    resetUsers
   }
 `;
 
 const App = () => {
-  const { loading, error, data } = useQuery(ALL_USERS_QUERY);
+  const {data: usersQueryData, error: allUsersError, loading: allUsersLoading} = useQuery(ALL_USERS);
+  const [resetUsers, {data: resetData, loading: resetLoading}] = useMutation(RESET_USERS, {
+    refetchQueries: [{query: ALL_USERS}]
+  });
 
-  if (loading) {
+  if (allUsersLoading || resetLoading) {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>Error: {JSON.stringify(error)}</p>;
+  if (allUsersError) {
+    return <p>Error Fetching Users: {JSON.stringify(allUsersError)}</p>;
   }
+  console.log(resetData)
 
   return (
     <pre>
       <code>
         <Routes>
-          <Route path="/" element={data.allUsers.length ? <UsersList users={data.allUsers} /> : <div>No Users Found</div>} />
+          <Route path="/" element={usersQueryData.allUsers.length ? <UsersList users={usersQueryData.allUsers} /> : <div>No Users Found</div>} />
           <Route path="/user" element={<UserDetails />} />
         </Routes>
-      </code>
+        <button
+          onClick={() => resetUsers()}
+        >
+          Reset
+        </button>
+      </code> 
     </pre>
   );
 };

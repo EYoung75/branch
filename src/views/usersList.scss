@@ -3,7 +3,7 @@
   padding: 20px 50px;
   font-family: $fontSecondary;
   box-sizing: border-box;
-  color: $darkGray;
+  color: $midGray;
 
   button {
     height: 30px;
@@ -19,6 +19,7 @@
     &:disabled {
       border: solid 2px $lightGray;
       color: $lightGray;
+      pointer-events: none;
     }
 
     &:hover {
@@ -28,7 +29,7 @@
 
   .heading {
     border-bottom: solid 2px $lightGray;
-    font-size: 14px;
+    font-size: 12px;
     text-transform: uppercase;
     h3:first-of-type {
       padding-left: 50px;

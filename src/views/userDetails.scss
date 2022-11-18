@@ -1,11 +1,12 @@
 @import '../global.scss';
 
-.userDetails {
+.container {
   display: flex;
   flex-direction: column;
   height: 100vh;
   padding: 0 50px;
   padding-top: 10%;
+  font-family: $fontSecondary;
 
 
   button {
@@ -26,7 +27,6 @@
 
   .details {
     margin-top: 20px;
-
     .column:first-of-type {
         border-right: solid $lightGray 2px;
         margin-right: 20px;
@@ -34,6 +34,11 @@
         input {
             width: 50%;
             margin-top: 3px;
+        }
+    }
+    .column:nth-of-type(2) {
+        input {
+            font-size: 10px;
         }
     }
   }
