@@ -36,9 +36,7 @@ const App = () => {
         <Routes>
           <Route
             path='/'
-            element={
-              data.allUsers.length ? <UsersList users={data.allUsers} /> : <div>No Users Found</div>
-            }
+            element={<UsersList users={data.allUsers} />}
           />
           <Route path='/user' element={<UserDetails />} />
         </Routes>
