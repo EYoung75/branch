@@ -24,6 +24,9 @@
     &:hover {
       cursor: pointer;
     }
+    &:checked + span {
+      color: $blue;
+    }
   }
   span {
     width: calc((100% - 20px) / 3);

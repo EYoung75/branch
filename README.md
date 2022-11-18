@@ -11,7 +11,7 @@
 ```js
 export default {
   GRAPHQL_ENDPOINT: '',
-  GRAPHQL_API_KEY: ''
+  GRAPHQL_API_KEY: '',
 };
 ```
 

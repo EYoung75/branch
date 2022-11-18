@@ -6,9 +6,7 @@ import ReactDOM from 'react-dom';
 import env from './env';
 import UsersList from './views/usersList.js';
 import UserDetails from './views/userDetails.js';
-import { useMutation } from '@apollo/react-hooks';
-import { ALL_USERS, RESET_USERS } from './gql';
-
+import { ALL_USERS } from './gql';
 
 const client = new ApolloClient({
   uri: env.GRAPHQL_ENDPOINT,
@@ -22,32 +20,29 @@ const client = new ApolloClient({
 });
 
 const App = () => {
-  const {data: usersQueryData, error: allUsersError, loading: allUsersLoading} = useQuery(ALL_USERS);
-  const [resetUsers, {loading: resetLoading}] = useMutation(RESET_USERS, {
-    refetchQueries: [{query: ALL_USERS}]
-  });
+  const { data, error, loading } = useQuery(ALL_USERS);
 
-  if (allUsersLoading || resetLoading) {
+  if (loading) {
     return <p>Loading...</p>;
   }
 
-  if (allUsersError) {
-    return <p>Error Fetching Users: {JSON.stringify(allUsersError)}</p>;
+  if (error) {
+    return <p>Error Fetching Users: {JSON.stringify(error)}</p>;
   }
 
   return (
     <pre>
       <code>
         <Routes>
-          <Route path="/" element={usersQueryData.allUsers.length ? <UsersList users={usersQueryData.allUsers} /> : <div>No Users Found</div>} />
-          <Route path="/user" element={<UserDetails />} />
+          <Route
+            path='/'
+            element={
+              data.allUsers.length ? <UsersList users={data.allUsers} /> : <div>No Users Found</div>
+            }
+          />
+          <Route path='/user' element={<UserDetails />} />
         </Routes>
-        <button
-          onClick={() => resetUsers()}
-        >
-          Reset
-        </button>
-      </code> 
+      </code>
     </pre>
   );
 };
