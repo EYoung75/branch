@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import UserRow from '../components/userRow.js';
 import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { DELETE_USERS } from '../gql.js';
 import './usersList.scss';
 
 export default function UsersList(props) {
@@ -9,12 +9,7 @@ export default function UsersList(props) {
   // Local state for tracking all selected users
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  const DELETE_USERS = gql`
-    mutation DeleteUsers($emails: [ID]!) {
-      deleteUsers(emails: $emails)
-    }
-  `;
-
+  
   const [deleteUsers, { data, loading, error }] = useMutation(DELETE_USERS);
 
   // Accepts a user object as a parameter and if the user exists removes it from the selectedUsers array, otherwise appends the user to the array

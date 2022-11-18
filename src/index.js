@@ -1,13 +1,13 @@
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ApolloClient, { gql } from 'apollo-boost';
+import ApolloClient from 'apollo-boost';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import env from './env';
 import UsersList from './views/usersList.js';
 import UserDetails from './views/userDetails.js';
 import { useMutation } from '@apollo/react-hooks';
-import { ALL_USERS } from './queries';
+import { ALL_USERS, RESET_USERS } from './gql';
 
 
 const client = new ApolloClient({
@@ -21,17 +21,9 @@ const client = new ApolloClient({
   },
 });
 
-
-
-const RESET_USERS = gql`
-  mutation ResetUsers {
-    resetUsers
-  }
-`;
-
 const App = () => {
   const {data: usersQueryData, error: allUsersError, loading: allUsersLoading} = useQuery(ALL_USERS);
-  const [resetUsers, {data: resetData, loading: resetLoading}] = useMutation(RESET_USERS, {
+  const [resetUsers, {loading: resetLoading}] = useMutation(RESET_USERS, {
     refetchQueries: [{query: ALL_USERS}]
   });
 
@@ -42,7 +34,6 @@ const App = () => {
   if (allUsersError) {
     return <p>Error Fetching Users: {JSON.stringify(allUsersError)}</p>;
   }
-  console.log(resetData)
 
   return (
     <pre>

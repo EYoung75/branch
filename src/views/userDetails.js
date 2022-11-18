@@ -1,41 +1,38 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { rolesMap } from '../usersDef';
-import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
-import { ALL_USERS } from '../queries';
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import { ALL_USERS, GET_USER, UPDATE_USER} from '../gql';
 import './userDetails.scss';
 
 export default function UserDetails() {
   const location = useLocation();
   const [user, setUser] = useState({ ...location.state.user });
 
-  const UPDATE_USER = gql`
-    mutation UpdateUser($email: ID!, $newAttributes: UserAttributesInput!) {
-      updateUser(email: $email, newAttributes: $newAttributes) {
-        email
-        role
-        name
-      }
-    }
-  `;
+  
 
-  const [updateUser, { data, loading, error }] = useMutation(UPDATE_USER, {refetchQueries: [{query: ALL_USERS}]});
-  if (loading) {
+const {data: getUserData, error: getUserError, loading: getUserLoading} = useQuery(GET_USER, {
+  variables: {email: location.state.user.email}
+});
+
+
+  const [updateUser, {loading: updateUserLoading, error: updateUserError }] = useMutation(UPDATE_USER, {refetchQueries: [{query: ALL_USERS}]});
+  if (updateUserLoading || getUserLoading) {
     return <p>Loading...</p>;
   }
-
-  if (error) {
-    return <p>Error: {JSON.stringify(error)}</p>;
+  console.log(getUserData);
+  if (updateUserError) {
+    return <p>Error: {JSON.stringify(updateUserError)}</p>;
+  }
+  if(getUserError) {
+    return <p>Error: {JSON.stringify(getUserError)}</p>;
   }
 
   return (
     <div className="container">
-      {JSON.stringify(data)}
       <br/>
-      {JSON.stringify(location.state.user)}
+      {JSON.stringify(getUserData)}
       <br />
-      {JSON.stringify(user)}
       <br />
       {user.name}
       <div className="title">
