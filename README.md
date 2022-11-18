@@ -1,5 +1,16 @@
 # React Table CRUD evaluation
 
+## Evan Young Notes: 
+ - Deployed Application: https://main--graceful-moonbeam-aa1e38.netlify.app/
+
+ > This was my first time using GraphQL, Apollo, and React Hooks. As such, there are definitely some areas that could use improvement. I've included the following points sum up some of my thoughts over the course of this exercise:
+ 
+  - `userDetails.js` - Instead of utilizing the getUser query I ended up passing a user object to the userDetails view and updating a shallow copy of the user object until the updateUser mutation was ready to be called on "save" button click. Caching with Apollo is one concept that I didn't quite get to but will be exploring in the future.
+
+  - I utilize Vue SFC for most projects currently and I experimented quite a bit with the file structure of this application. I decided to create a style sheet for each view and component to be kept within the same folder as its corresponding component. I chose to create one `global.scss` file for reusable declarations, imports and variables since this is a small project.
+
+  ---
+
 - Fork this repository and build your solution in the fork. When you're done reach out to us with the link to your solution repository.
 
 - The starting point code in this repo queries a list of all users and puts them on the screen as JSON.

@@ -34,10 +34,7 @@ const App = () => {
     <pre>
       <code>
         <Routes>
-          <Route
-            path='/'
-            element={<UsersList users={data.allUsers} />}
-          />
+          <Route path='/' element={<UsersList users={data.allUsers} />} />
           <Route path='/user' element={<UserDetails />} />
         </Routes>
       </code>

@@ -49,11 +49,14 @@ export default function UsersList(props) {
         <h1>Users</h1>
         <button
           disabled={!selectedUsers.length}
-          onClick={() =>
+          onClick={() => {
+            // Map the selectedUsers array to return an array of emails expected by the DeleteUsers mutation
             deleteUsers({
               variables: { emails: selectedUsers.map((user) => user.email) },
-            })
-          }
+            });
+            // Reset the local selectedUsers array
+            setSelectedUsers([]);
+          }}
         >
           Delete
         </button>
